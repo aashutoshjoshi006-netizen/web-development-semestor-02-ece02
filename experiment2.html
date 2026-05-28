@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Salary Management System</title>
+
+  <style>
+
+    body{
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1{
+      margin-bottom: 15px;
+    }
+
+    input{
+      padding: 5px;
+      width: 120px;
+      margin-right: 5px;
+    }
+
+    button{
+      padding: 5px 10px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td{
+      border: 1px solid black;
+    }
+
+    th, td{
+      padding: 10px;
+      text-align: center;
+    }
+
+    #result{
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <h1>Employee Salary Management System</h1>
+
+  <!-- Input Fields -->
+
+  <input type="text" id="name" placeholder="Employee Name">
+  <input type="number" id="id" placeholder="Employee ID">
+  <input type="number" id="salary" placeholder="Salary">
+  <input type="text" id="department" placeholder="Department">
+
+  <!-- Buttons -->
+
+  <button onclick="addEmployee()">Add Employee</button>
+
+  <button onclick="displayEmployees()">Display All</button>
+
+  <button onclick="filterSalary()">Salary > 50000</button>
+
+  <button onclick="totalSalary()">Total Salary</button>
+
+  <button onclick="averageSalary()">Average Salary</button>
+
+  <button onclick="countDepartment()">Count by Department</button>
+
+  <!-- Output Table -->
+
+  <table id="employeeTable">
+
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Salary</th>
+        <th>Department</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
+  </table>
+
+  <!-- Result Area -->
+
+  <div id="result"></div>
+
+
+  <script>
+
+    // Array of employee objects
+
+    let employees = [
+      {
+        name: "Rohit Pratap",
+        id: 1360,
+        salary: 515151,
+        department: "AIML"
+      }
+    ];
+
+
+    // Display Employees
+
+    function displayEmployees(){
+
+      let tableBody = document.querySelector("#employeeTable tbody");
+
+      tableBody.innerHTML = "";
+
+      // for...of loop
+
+      for(let emp of employees){
+
+        let row = `
+          <tr>
+            <td>${emp.name}</td>
+            <td>${emp.id}</td>
+            <td>${emp.salary}</td>
+            <td>${emp.department}</td>
+          </tr>
+        `;
+
+        tableBody.innerHTML += row;
+      }
+    }
+
+
+    // Add Employee
+
+    function addEmployee(){
+
+      let name = document.getElementById("name").value;
+      let id = document.getElementById("id").value;
+      let salary = Number(document.getElementById("salary").value);
+      let department = document.getElementById("department").value;
+
+      if(name === "" || id === "" || salary === "" || department === ""){
+        alert("Please fill all fields");
+        return;
+      }
+
+      let employee = {
+        name: name,
+        id: id,
+        salary: salary,
+        department: department
+      };
+
+      employees.push(employee);
+
+      displayEmployees();
+
+      // Clear Inputs
+
+      document.getElementById("name").value = "";
+      document.getElementById("id").value = "";
+      document.getElementById("salary").value = "";
+      document.getElementById("department").value = "";
+    }
+
+
+    // Filter Salary > 50000
+
+    function filterSalary(){
+
+      let filtered = employees.filter(emp => emp.salary > 50000);
+
+      let tableBody = document.querySelector("#employeeTable tbody");
+
+      tableBody.innerHTML = "";
+
+      for(let emp of filtered){
+
+        let row = `
+          <tr>
+            <td>${emp.name}</td>
+            <td>${emp.id}</td>
+            <td>${emp.salary}</td>
+            <td>${emp.department}</td>
+          </tr>
+        `;
+
+        tableBody.innerHTML += row;
+      }
+
+      document.getElementById("result").innerHTML =
+        "Employees with Salary > 50000";
+    }
+
+
+    // Total Salary
+
+    function totalSalary(){
+
+      let total = 0;
+
+      // for...of loop
+
+      for(let emp of employees){
+        total += emp.salary;
+      }
+
+      document.getElementById("result").innerHTML =
+        "Total Salary Payout: ₹" + total;
+    }
+
+
+    // Average Salary
+
+    function averageSalary(){
+
+      let total = 0;
+
+      for(let emp of employees){
+        total += emp.salary;
+      }
+
+      let average = total / employees.length;
+
+      document.getElementById("result").innerHTML =
+        "Average Salary: ₹" + average.toFixed(2);
+    }
+
+
+    // Count by Department
+
+    function countDepartment(){
+
+      let deptCount = {};
+
+      // for...of loop
+
+      for(let emp of employees){
+
+        if(deptCount[emp.department]){
+          deptCount[emp.department]++;
+        }
+        else{
+          deptCount[emp.department] = 1;
+        }
+      }
+
+      let output = "";
+
+      // for...in loop
+
+      for(let dept in deptCount){
+
+        output += dept + ": " + deptCount[dept] + " employee(s)<br>";
+      }
+
+      document.getElementById("result").innerHTML = output;
+    }
+
+
+    // Initial Display
+
+    displayEmployees();
+
+  </script>
+
+</body>
+</html>
