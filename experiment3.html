@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JavaScript DOM Manipulation Lab</title>
+
+  <style>
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background-color: #e6e6e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container{
+      width: 700px;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    }
+
+    h1{
+      margin-bottom: 30px;
+      font-size: 42px;
+    }
+
+    input{
+      width: 300px;
+      padding: 12px;
+      font-size: 18px;
+      border: 1px solid #999;
+      border-radius: 5px;
+      margin-bottom: 25px;
+    }
+
+    .btn-group{
+      margin-bottom: 25px;
+    }
+
+    button{
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      margin: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover{
+      background-color: #0056b3;
+    }
+
+    p{
+      font-size: 22px;
+      margin-top: 20px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1 id="heading">Welcome to JavaScript Lab</h1>
+
+    <input type="text" id="inputText" placeholder="Enter new heading text">
+
+    <div class="btn-group">
+
+      <button id="changeHeadingBtn">
+        Change Heading
+      </button>
+
+      <button id="changeBgBtn">
+        Change Background
+      </button>
+
+      <button id="increaseFontBtn">
+        Increase Font Size
+      </button>
+
+      <br>
+
+      <button id="toggleParaBtn">
+        Show/Hide Paragraph
+      </button>
+
+      <button id="resetBtn">
+        Reset
+      </button>
+
+    </div>
+
+    <p id="paragraph">
+      This is a sample paragraph. JavaScript events can dynamically change content.
+    </p>
+
+  </div>
+
+
+  <script>
+
+    // Selecting Elements using DOM
+
+    let heading = document.getElementById("heading");
+
+    let inputText = document.getElementById("inputText");
+
+    let paragraph = document.getElementById("paragraph");
+
+    let container = document.querySelector(".container");
+
+    let fontSize = 42;
+
+
+    // Change Heading Event
+
+    document.getElementById("changeHeadingBtn")
+    .addEventListener("click", function(){
+
+      if(inputText.value !== ""){
+
+        heading.innerHTML = inputText.value;
+      }
+    });
+
+
+    // Change Background Event
+
+    document.getElementById("changeBgBtn")
+    .addEventListener("click", function(){
+
+      let randomColor =
+        "#" + Math.floor(Math.random()*16777215).toString(16);
+
+      container.style.backgroundColor = randomColor;
+    });
+
+
+    // Increase Font Size Event
+
+    document.getElementById("increaseFontBtn")
+    .addEventListener("click", function(){
+
+      fontSize += 5;
+
+      heading.style.fontSize = fontSize + "px";
+    });
+
+
+    // Show/Hide Paragraph Event
+
+    document.getElementById("toggleParaBtn")
+    .addEventListener("click", function(){
+
+      if(paragraph.style.display === "none"){
+
+        paragraph.style.display = "block";
+      }
+
+      else{
+
+        paragraph.style.display = "none";
+      }
+    });
+
+
+    // Reset Event
+
+    document.getElementById("resetBtn")
+    .addEventListener("click", function(){
+
+      // Reset Heading
+
+      heading.innerHTML = "Welcome to JavaScript Lab";
+
+      // Reset Background
+
+      container.style.backgroundColor = "white";
+
+      // Reset Font Size
+
+      fontSize = 42;
+
+      heading.style.fontSize = "42px";
+
+      // Show Paragraph
+
+      paragraph.style.display = "block";
+
+      // Clear Input
+
+      inputText.value = "";
+    });
+
+  </script>
+
+</body>
+</html>
